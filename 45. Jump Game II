@@ -1,0 +1,29 @@
+class Solution {
+public:
+    int jump(vector<int>& nums) {
+        int ans = 0;
+        int end = 0;
+        int maxPos = 0;
+        for (int i = 0; i < nums.size() - 1; i++)
+        {
+            maxPos = max(nums[i] + i, maxPos);
+            if (i == end)
+            {
+                end = maxPos;
+                ans++;
+            }
+        }
+        return ans;
+    }
+};
+
+
+logic- My understanding of this approach is that in the first loop you calculate a prefix sum. Prefix sum is a CP pattern for creating a datastructure such as an array in such a way that it depends on the previous 
+element. Some also call this DP and you could argue that DP includes all prefix sum algorithms.
+
+So, since we know there is a solution from the text, that we need at least a jump of length i until this nums[i] element. So, the length of all jumps plus the current one can reach length of at least nums[i] + i.
+nums[i-1] might be bigger than this though, so we keep track of that also. Why is it better if nums[i-1] is bigger? Then we know we should jump from nums[i-1] instead, because we can get further.
+
+It is greedy because we jump the furthest we can from any nums[i].
+
+The beauty of this code is that it uses the original array as the prefix sum/DP array and uses only O(1) space as well as being an O(n) algorithm. So, it is best time and space wise also.
