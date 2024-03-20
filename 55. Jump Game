@@ -1,0 +1,23 @@
+logic - at each step, we keep track of the furthest reachable index. The nature of the problem (eg. maximal jumps where you can hit a range of targets instead of singular jumps where you can only hit one target) 
+is that for an index to be reachable, each of the previous indices have to be reachable.
+
+class Solution {
+public:
+    bool canJump(vector<int>& nums) {
+        int n=nums.size();
+        if(n==1) return true;
+        int maxIdx=0;
+        for(int i=0;i<n;i++){
+            if (maxIdx >= nums.size() - 1){
+                return true;
+            }
+            if (nums[i] == 0 && maxIdx == i){
+                return false;
+            }
+            if (maxIdx < i + nums[i]){
+                maxIdx = i + nums[i];
+            }
+        }
+        return true;
+    }
+};
