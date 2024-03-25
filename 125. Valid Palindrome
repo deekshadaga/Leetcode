@@ -1,0 +1,48 @@
+class Solution {
+public:
+    bool isPalindrome(string s) {
+        int n = s.length();
+        int low=0 ,high=n-1;
+        while(low<high){
+            while(low<n && !iswalnum(s[low]))low++;
+            while(high>=0 && !iswalnum(s[high]))high--;
+            if((low<high) && tolower(s[low])!=tolower(s[high])) return false;
+            low++;
+            high--; 
+        }
+        return true;
+    }
+};
+
+################################################################################################################################################################
+
+bool isPalindrome(string s) {       
+        int size = s.length();
+        int i = 0, j = size - 1;
+        while (i <= j) {
+            int cnt = 0;
+
+            if ((s[i] >= 'a' && s[i] <= 'z') || (s[i] >= '0' && s[i] <= '9')) {
+                // No need to modify lowercase letters and digits
+            } else if (s[i] >= 'A' && s[i] <= 'Z') {
+                s[i] = char(s[i] + 32); // Convert uppercase letters to lowercase
+            } else {
+                i++; cnt++;
+            }
+            
+            if ((s[j] >= 'a' && s[j] <= 'z') || (s[j] >= '0' && s[j] <= '9')) {
+                // No need to modify lowercase letters and digits
+            } else if (s[j] >= 'A' && s[j] <= 'Z') {
+                s[j] = char(s[j] + 32); // Convert uppercase letters to lowercase
+            } else {
+                j--; cnt++;
+            }
+            
+            if (cnt > 0) continue;
+
+            if (s[i] != s[j]) return false;
+            i++; j--;
+        }
+        return true;
+    }
+};
