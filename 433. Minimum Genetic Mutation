@@ -1,0 +1,29 @@
+class Solution {
+public:
+    int minMutation(string startGene, string endGene, vector<string>& bank) {
+        if(bank.size()==0) return -1;
+        unordered_set<string> wl (bank.begin(),bank.end());
+        if(wl.find(endGene) == wl.end()) return -1;
+        queue <pair<string,int>> q;
+        char geneChar[] = {'A','C','G','T'};
+        q.push({startGene,0});
+        while(!q.empty()){
+            string currWord = q.front().first;
+            int level = q.front().second;
+            q.pop();
+            for(int i=0;i<currWord.size();i++){
+                string og = currWord;
+                for(int ch = 0;ch<4;ch++){
+                    currWord[i] = geneChar[ch];
+                    if(currWord == endGene) return level+1;
+                    if(wl.find(currWord)!= wl.end()){
+                        q.push({currWord,level+1});
+                        wl.erase(currWord);
+                    }
+                }
+                currWord = og;
+            }
+        }
+        return -1;
+    }
+};
