@@ -1,0 +1,29 @@
+class Solution {
+public:
+    int ladderLength(string beginWord, string endWord, vector<string>& wordList) {
+        unordered_set<string> wl (wordList.begin(),wordList.end());
+        if(wl.find(endWord)==wl.end()) return 0;
+        queue <pair<string,int>> q;
+        q.push({beginWord,1});
+        wl.erase(beginWord);
+        while(!q.empty()){
+            string currWord = q.front().first;
+            int level = q.front().second;
+            if(currWord == endWord) return level;
+            q.pop();
+            for(int i=0;i<currWord.size();i++){
+                string og = currWord;
+                for(char ch = 'a';ch<='z';ch++){
+                    currWord[i] = ch;
+                    if(wl.find(currWord)!= wl.end()){
+                        cout<<currWord;
+                        q.push({currWord,level+1});
+                        wl.erase(currWord);
+                    }
+                }
+                currWord = og;
+            }
+        }
+        return 0;
+    }
+};
