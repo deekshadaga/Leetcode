@@ -1,0 +1,39 @@
+# Using Linear Search - gives TLE
+
+class Solution {
+public:
+    int ans[101][10001];
+    int solve(int e,int f){
+        if(e==1) return f;
+        if(f==0 || f==1) return f;
+        int mn = INT_MAX;
+        if(ans[e][f]!= -1) return ans[e][f];
+        for(int i=1;i<=f;i++){
+            int low,high;
+            if(ans[e-1][i-1]!=-1) {
+                low = ans[e-1][i-1];
+            }
+            else{
+                low = solve(e-1,i-1);
+                ans[e-1][i-1] = low;
+            }
+            if(ans[e][f-i]!=-1) {
+                high = ans[e][f-i];
+            }
+            else{
+                high = solve(e,f-i);
+                ans[e][f-i] = high;
+            }
+            int temp = 1+ max(low,high);
+            mn = min(mn, temp);
+        }
+        return ans[e][f]=mn;
+    }
+    int superEggDrop(int e, int f) {
+        memset(ans,-1,sizeof(ans));
+        return solve(e,f);
+    }
+};
+
+# Using Binary Search
+
