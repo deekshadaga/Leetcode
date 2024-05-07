@@ -1,0 +1,22 @@
+class Solution {
+public:
+    void getParenthesis(int open,int close, string s, int n,vector<string> &ans){
+        if(s.length() == 2*n && open == close) {
+            ans.push_back(s);
+            return;
+        }
+        if(open<n) {
+            getParenthesis(open+1,close,s+"(",n,ans);
+        }
+        if(close<open){
+            getParenthesis(open,close+1,s+")",n,ans);
+        }
+
+        return;
+    }
+    vector<string> generateParenthesis(int n) {
+        vector<string> ans;
+        getParenthesis(0,0,"",n,ans);
+        return ans;
+    }
+};
