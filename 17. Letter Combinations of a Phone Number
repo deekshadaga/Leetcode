@@ -1,0 +1,21 @@
+class Solution {
+public:
+    void makeCombination(string s,string digits, vector<string> phone, vector<string> &ans){
+        if(digits.empty()) {
+            ans.push_back(s);
+            return;
+        }
+        string letters = phone[digits[0]-'2'];
+        for(char letter : letters){
+            makeCombination(s+letter, digits.substr(1),phone,ans);
+        }
+        return;
+    }
+    vector<string> letterCombinations(string digits) {
+        vector<string> ans;
+        vector<string> phone = {"abc","def","ghi","jkl","mno","pqrs","tuv","wxyz"};
+        if(digits.empty()) return {}; 
+        makeCombination("",digits,phone,ans);
+        return ans;
+    }
+};
