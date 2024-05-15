@@ -1,0 +1,31 @@
+###  BACKTRACKING  ###
+
+class Solution {
+public:
+    int maxLength(vector<string>& arr) {
+        int res=0;
+        backtrack(0,"",res,arr);
+        return res;
+    }
+private:
+    void backtrack(int idx, string ans, int &res, vector<string> &arr){
+        if(res<ans.length()) 
+            res = ans.length();
+        for(int i=idx; i<arr.size();i++){
+            if(!isValid(ans,arr[i]))
+                continue;
+            backtrack(i+1,ans+arr[i],res,arr);
+        }
+    }
+    bool isValid(string ans, string newAns){
+        unordered_set<char> freq;
+        for(char ch : newAns){
+            if(freq.count(ch)>0) 
+                return false;
+            freq.insert(ch);
+            if(ans.find(ch) != string::npos)
+                return false;
+        }
+        return true;
+    }
+};
