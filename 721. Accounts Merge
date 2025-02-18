@@ -1,0 +1,70 @@
+class DisjointSet{
+    vector<int> parent,size;
+    public:
+        DisjointSet(int n){
+            parent.resize(n+1);
+            size.resize(n+1);
+            for(int i=0;i<=n;i++){
+                parent[i] = i;
+                size[i] = 1; 
+            }
+        }
+        int findParent(int node){
+            if(node == parent[node]) return node;
+            return parent[node] = findParent(parent[node]);
+        }
+        void unionBySize(int x, int y){
+            int parent_x = findParent(x);
+            int parent_y = findParent(y);
+            if(parent_x == parent_y) return;
+            if(size[parent_x]<size[parent_y]){
+                parent[parent_x] = parent_y;
+                size[parent_y] += size[parent_x];
+            }
+            else{
+                parent[parent_y] = parent_x;
+                size[parent_x] += size[parent_y];
+            }
+        }
+};
+
+class Solution {
+public:
+    vector<vector<string>> accountsMerge(vector<vector<string>>& accounts) {
+        int n = accounts.size();
+        unordered_map<string,int> mailMap;
+        DisjointSet ds(n);
+        for(int i=0;i<n;i++){
+            for(int j=1;j<accounts[i].size();j++){
+                string email = accounts[i][j];
+                if(mailMap.find(email) == mailMap.end()){
+                    mailMap[email] = i;
+                }
+                else{
+                    ds.unionBySize(i,mailMap[email]);
+                }
+            }
+        }
+        vector<vector<string>> mergedMail(n);
+        for(auto it: mailMap){
+            string email = it.first;
+            int emailNode = ds.findParent(it.second);
+            mergedMail[emailNode].push_back(email);
+        }
+
+        vector<vector<string>> ans;
+
+        for(int i=0;i<n;i++){
+            if(mergedMail[i].size() == 0)
+                continue;
+            sort(mergedMail[i].begin(),mergedMail[i].end());
+            vector<string> temp;
+            temp.push_back(accounts[i][0]);
+            for(int j = 0;j<mergedMail[i].size();j++){
+                temp.push_back(mergedMail[i][j]);
+            }
+            ans.push_back(temp);
+        }
+        return ans;
+    }
+};
