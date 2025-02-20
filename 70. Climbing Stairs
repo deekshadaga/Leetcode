@@ -11,3 +11,21 @@ public:
         return c;
     }
 };
+
+
+class Solution {
+    int solve(int n,vector<int> &dp, int curr){
+        if(curr > n) return 0;
+        if(dp[curr] != -1) return dp[curr];
+        return dp[curr] = solve(n,dp,curr-1) + solve(n,dp,curr-2);
+    }
+public:
+    int climbStairs(int n) {
+        if(n<=2) return n;
+        vector<int> dp(n,-1);
+        dp[0] = 1;
+        dp[1] = 2;
+        solve(n,dp,n-1);
+        return dp[n-1];
+    }
+};
