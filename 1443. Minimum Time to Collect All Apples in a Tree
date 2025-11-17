@@ -1,0 +1,22 @@
+class Solution {
+public:
+    int dfs(int prev,int curr, vector<vector<int>>& adjList, vector<bool>& hasApple){
+        int ans=0;
+        for(int it : adjList[curr]){
+            if(it==prev) continue;
+            int res = dfs(curr,it,adjList,hasApple);
+            if(res > 0 || hasApple[it]){
+                ans += res+2;
+            }
+        }
+        return ans;
+    }
+    int minTime(int n, vector<vector<int>>& edges, vector<bool>& hasApple) {
+        vector<vector<int>> adjList(n);
+        for(auto it : edges){
+            adjList[it[1]].push_back(it[0]);
+            adjList[it[0]].push_back(it[1]);
+        }
+        return dfs(-1,0,adjList,hasApple);
+    }
+};
