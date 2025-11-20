@@ -1,0 +1,23 @@
+class Solution {
+public:
+    string decimaltobinary(int n) {
+        string res = "";
+        if (n == 0)
+            return "0";
+
+        while (n > 0) {
+            res += ((n % 2) + '0');
+            n /= 2;
+        }
+        reverse(res.begin(), res.end());
+        return res;
+    }
+
+    string convertDateToBinary(string date) {
+        string y = decimaltobinary(stoi(date.substr(0, 4)));
+        string m = decimaltobinary(stoi(date.substr(5, 2)));
+        string d = decimaltobinary(stoi(date.substr(8, 2)));
+
+        return (y + "-" + m + "-" + d);
+    }
+};
