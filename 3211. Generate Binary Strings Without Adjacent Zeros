@@ -1,0 +1,18 @@
+class Solution {
+public:
+    void generateStrings(string curr, int length, int n, vector<string> &res){
+        if(length == n) {
+            res.push_back(curr);
+            return;
+        }
+        if(curr[length-1] == '1') generateStrings(curr + "0",length+1,n,res);
+        generateStrings(curr + "1",length+1,n,res);
+        return;
+    }
+    vector<string> validStrings(int n) {
+        vector<string> res;
+        generateStrings("0",1,n,res);
+        generateStrings("1",1,n,res);
+        return res;
+    }
+};
