@@ -1,0 +1,15 @@
+class Solution {
+public:
+    bool checkIfExist(vector<int>& arr) {
+        set<int> hashSet;
+        hashSet.insert(arr[0]);
+        for(int i=1;i<arr.size();i++){
+            if(hashSet.find(arr[i]*2)!=hashSet.end())
+                return true;
+            if(arr[i]%2 == 0 && hashSet.find(arr[i]/2)!=hashSet.end())
+                return true;
+            hashSet.insert(arr[i]);
+        }
+        return false;
+    }
+};
