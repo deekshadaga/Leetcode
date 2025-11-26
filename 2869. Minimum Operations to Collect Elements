@@ -1,0 +1,16 @@
+class Solution {
+public:
+    int minOperations(vector<int>& nums, int k) {
+        int n = nums.size();
+        vector<bool> flag(n+1,false);
+        int count=0;
+        for(int i = n-1; i>=0; i--){
+            if(nums[i] <= k && !flag[nums[i]] ){
+                flag[nums[i]] = true;
+                count++;
+                if(count == k) return n-i;
+            }
+        }
+        return -1;
+    }
+};
