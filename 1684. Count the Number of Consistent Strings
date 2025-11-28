@@ -1,0 +1,20 @@
+class Solution {
+public:
+    int countConsistentStrings(string allowed, vector<string>& words) {
+        set<char> allowedChars;
+        int res=0;
+        for(char i : allowed){
+            allowedChars.insert(i);
+        }
+        for(string word : words){
+            int i=0;
+            for( i=0;i<word.length();i++){
+                if(allowedChars.find(word[i])==allowedChars.end()) break;
+            }
+            if(i==word.length()){
+                res++;
+            }
+        }
+        return res;
+    }
+};
